@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <windows.h>
+#define p printf
+#define s scanf
+#define g gotoxy
+
+void gotoxy (int x, int y){
+    COORD coord;
+    coord.X = x - 1;
+    coord.Y = y - 1;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}   
+
+int main (){
+    int num [7], col, row, temp, pass, comp;
+    char ans;
+    system("cls");
+    do {
+        g(2, 2);p("Please Enter a number: ");
+        for (row = 1; row < 7; row ++){
+            g(25, 2);s("%d", &num[row]);
+            g(25, 2);p("                   ");
+        }
+        for (pass = 1; pass < 7; pass ++){
+            for (comp = 1; comp < 6; comp ++){
+                if (num [comp] > num [comp + 1]){
+                    temp = num [comp];
+                    num [comp] = num [comp + 1];
+                    num [comp + 1] = temp;
+                }
+            }
+        }
+        for (row = 1; row < 7; row ++){
+            g(2, 3);p("Sort value:");
+            g(2 * row, 4);p("%d", num[row]);
+        }
+
+        g(2, 7);p("Try again? ");
+        g(15, 7);s("%s", &ans);
+        g(25, 2);p("                   ");
+        g(2, 7);p("                     ");
+        g(2, 3);p("                      ");
+        g(2, 4);p("                           ");
+    } while (ans == 'y' || ans == 'Y');
+    system("cls");
+    exit(0);
+}
